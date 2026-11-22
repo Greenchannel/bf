@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include <windows.h>
 #include <string>
 #include "json.hpp"
 const int buffer_size=8192;
@@ -127,10 +126,6 @@ class interpreter{
         }           
 };
 int main(int argc,char * argv[]){
-#ifdef _WIN32
-    SetConsoleOutputCP(CP_UTF8);      
-    SetConsoleCP(CP_UTF8);
-#endif
     memory ptr;
     interpreter mode(ptr);//todo
     if (argc==2){//执行模式
