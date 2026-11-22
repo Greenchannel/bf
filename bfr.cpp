@@ -2,6 +2,7 @@
 #include <fstream>
 #include <filesystem>
 #include <string>
+#include <cstring>
 #include "json.hpp"
 const int buffer_size=8192;
 class memory{
@@ -75,9 +76,6 @@ std::string read_bf(const std::string & file_name){
 class interpreter{
     memory ptr;
     public:
-        interpreter(memory memory_ptr){
-            ptr=memory_ptr;
-        }
         void run(const std::string & command){
             int i=0;
             while(i<command.size()){
@@ -96,7 +94,7 @@ class interpreter{
                     std::cin>>write;
                     ptr.write(write);
                 }else if(command[i]=='['){
-                    if (ptr.read()=='0'){
+                    if (ptr.read()==0){
                         int depth=1;
                         while (depth>0){
                             
@@ -109,7 +107,7 @@ class interpreter{
                         }
                     } 
                 }else if(command[i]==']'){
-                    if (ptr.read()!='0'){
+                    if (ptr.read()!=0){
                         int depth=1;
                         while (depth>0){
                             i--;
@@ -122,14 +120,14 @@ class interpreter{
                         }
                     }
                 }
+                i++;
             }
         }           
 };
 int main(int argc,char * argv[]){
-    memory ptr;
-    interpreter mode(ptr);//todo
+    interpreter pointer;
     if (argc==2){//执行模式
-        mode.run(read_bf(argv[1]));
+        pointer.run(read_bf(argv[1]));
     }else{
         std::cout<<"please follow the usage,for example:'bfr'or'bfr xxx.bf'\n";
     }
